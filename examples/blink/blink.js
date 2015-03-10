@@ -12,9 +12,7 @@
 //   --header "meshblu_auth_uuid: SKYNET_TOKEN" \
 //   --header "meshblu_auth_token: SKYNET_UUID"
 
-"use strict";
-
-var Cylon = require("cylon");
+var Cylon = require('cylon');
 
 Cylon.robot({
   connections: {
@@ -23,7 +21,7 @@ Cylon.robot({
   },
 
   devices: {
-    led: { driver: "led", pin: 13, connection: "arduino" }
+    led: { driver: 'led', pin: 13, connection: 'arduino' }
   },
 
   work: function(my) {

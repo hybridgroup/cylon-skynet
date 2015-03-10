@@ -29,6 +29,6 @@
 
   "dependencies": {
     "cylon":  "~0.22.0",
-    "skynet": "latest"
+    "meshblu": "latest"
   }
 }
