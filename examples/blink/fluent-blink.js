@@ -10,25 +10,22 @@ var Cylon = require("cylon");
 
 Cylon
   .robot()
-  .connection("arduino", { adaptor: "firmata", port: "/dev/ttyACM0" })
+  .connection("arduino", { adaptor: "firmata", port: "/dev/tty.usbmodem1411" })
   .connection("skynet", {
     adaptor: "skynet",
-    uuid: "db895340-c344-11e4-9f09-df7578d68eac",
-    token: "d0a9f0d7e321657a38d25dd492492ffed0baf773",
+    uuid: "SKYNET_UUID",
+    token: "SKYNET_TOKEN"
   })
   .device("led", { driver: "led", pin: 13, connection: "arduino" })
-  .on("ready", function(bot) {
-    console.log("connected...");
-
-    bot.skynet.on("message", function(data) {
+  .on("ready", function(my) {
+    my.skynet.on("message", function(data) {
       console.log(data);
 
       if (data.payload.red === "on") {
-        bot.led.turnOn();
+        my.led.turnOn();
       } else if (data.payload.red === "off") {
-        bot.led.turnOff();
+        my.led.turnOff();
       }
     });
-  });
-
-Cylon.start();
+  })
+  .start();

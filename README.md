@@ -16,30 +16,31 @@ For more information about Cylon, check out our repo at https://github.com/hybri
 
 Install the module with:
 
-    $ npm install cylon-skynet
+    $ npm install cylon cylon-skynet
 
 ## How to Use
 
 ```javascript
-var Cylon = require('cylon');
+var Cylon = require("cylon");
 
 Cylon.robot({
   connections: {
-    arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' },
-    skynet: { adaptor: 'skynet', uuid: "742401f1-87a4-11e3-834d-670dadc0ddbf", token: "xjq9h3yzhemf5hfrme8y08fh0sm50zfr" }
+    arduino: { adaptor: "firmata", port: "/dev/tty.usbmodem1411" },
+    skynet: { adaptor: "skynet", uuid: "SKYNET_UUID", token: "SKYNET_TOKEN" }
   },
 
   devices: {
-    led: { driver: 'led', pin: 13, connection: 'arduino' }
+    led: { driver: "led", pin: 13, connection: "arduino" }
   },
 
   work: function(my) {
-    my.skynet.on('message', function(data) {
-      if(data.message.red == 'on') {
-        my.led.turnOn()
-      }
-      else if(data.message.red == 'off') {
-        my.led.turnOff()
+    my.skynet.on("message", function(data) {
+      console.log(data);
+
+      if (data.payload.red === "on") {
+        my.led.turnOn();
+      } else if (data.payload.red === "off") {
+        my.led.turnOff();
       }
     });
   }
@@ -50,13 +51,13 @@ Cylon.robot({
 
 First, you need to register a device on the Skynet network. You can do this with a curl command similar to this one:
 
-    curl -X POST -d "name=arduino&led=off" http://skynet.im/devices
+    $ curl -X POST http://meshblu.octoblu.com/devices
 
 This will return the new registration information for the device, most importantly the `uuid` and `token`:
 
-
-    => {"name":"arduino","led":"off","uuid":"8220cff0-2939-11e3-88cd-0b8e5fdfd7d4","timestamp":1380481272431,"token":"1yw0nfc54okcsor2tfqqsuvnrcf2yb9","online":false,"_id":"524878f8cc12f0877f000003"}
-
+```json
+{"geo":{"range":[1344446976,1344447487],"country":"ES","region":"56","city":"Cornellá De Llobregat","ll":[41.35,2.0833],"metro":0},"ipAddress":"80.34.162.160","online":false,"timestamp":"2015-03-05T14:35:23.638Z","uuid":"db895340-c344-11e4-9f09-df7578d68eac","token":"d0a9f0d7e321657a38d25dd492492ffed0baf773"}
+```
 
 ## Documentation
 

@@ -22,20 +22,16 @@ Cylon.robot
       module: "cylon-skynet"
 
   devices:
-    led:
-      driver: 'led'
-      pin: 13
-      connection: 'arduino'
+    led: { driver: 'led', pin: 13, connection: 'arduino' }
 
   work: (my) ->
-    console.log "connected..."
 
-    my.skynet.on 'message', (data) ->
-      console.log(data)
+    my.skynet.on "message", (data) ->
+      console.log data
 
-      if data.payload.red is 'on'
+      if data.payload.red is "on"
         my.led.turnOn()
-      else if data.payload.red is 'off'
+      else if data.payload.red is "off"
         my.led.turnOff()
 
-Cylon.start()
+.start()
